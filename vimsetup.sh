@@ -70,7 +70,7 @@ fi
 
 #Install shellcheck 
 echo "installing shellcheck"
-sudo apt-get install shellcheck
+sudo apt-get install shellcheck -y
 
 
 #Install ale
