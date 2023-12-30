@@ -1,12 +1,25 @@
 #!/bin/bash
 
-if ! [[ "$(whoami)" == "root" ]]; then 
+
+is_user_root () { [ "${EUID:-$(id -u)}" -eq 0 ]; }
+
+if ! is_user_root ; then
     echo Current user is logged in as "$(whoami)" which is good
     echo Executing this script as root will create a vim profile for root - and not the regular user as intended
-else 
-   echo -e "You are executing this script with sudo or as root\nAborting! Execute again as a non-root user" 
-   exit 1 
-fi 
+else
+   echo -e "You are executing this script with sudo or as root\nAborting! Execute again as a non-root user"
+   exit 1
+fi
+
+#Original root check below - and I will remove this permanently soon. The more formal method sits above. 
+
+#if ! [[ "$(whoami)" == "root" ]]; then 
+#    echo Current user is logged in as "$(whoami)" which is good
+#    echo Executing this script as root will create a vim profile for root - and not the regular user as intended
+#else 
+#   echo -e "You are executing this script with sudo or as root\nAborting! Execute again as a non-root user" 
+#   exit 1 
+#fi 
 
 
 if ! [[ -d "$HOME/tmp" ]]; then 
