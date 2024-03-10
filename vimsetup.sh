@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2023 Richard Kaler 
+# Copyright 2024 Richard Kaler 
 #
 # This script is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as published
@@ -21,7 +21,6 @@ else
     echo -e "You are executing this script with sudo or as root\nAborting! Execute again as a non-root user" 
     exit 1 
 fi
-
 
 if ! [[ -d "$HOME/tmp" ]]; then 
     mkdir -p "$HOME/tmp"
@@ -44,7 +43,6 @@ else
     echo vim is already installed 
 fi
 
-
 #install git 
 if ! [[ $(which git) ]]; then 
     sudo apt-get install git -y 
@@ -63,7 +61,6 @@ do
     fi
     break 
 done 
-
 
 #Install vim plugin manager - and with force since previous installs have failed  
 while : 
@@ -85,84 +82,82 @@ do
 echo "installing shellcheck"
 sudo apt-get install shellcheck -y 
 
-
 #Install ale
 echo "installing ale" 
 curl -sS https://webi.sh/vim-ale | sh
 
 echo "
-\" Vim-licence (c) 2023 McUsr 
+\" Vim-licence (c) 2024 McUsr 
 \" Miniscule shellcheck setup
 \" you :copen the quick fix list however you open the quickfix list! 
 \"
 if exists(\"current_compiler\")
-    finish
-    endif
-    let current_compiler = \"shellcheck\"
+finish
+endif
+let current_compiler = \"shellcheck\"
 
-    CompilerSet makeprg=shellcheck\ -f\ gcc\ \"%:p\"
-    CompilerSet errorformat=
-    \ '%f:%l:%c: %trror: %m,' .
-    \ '%f:%l:%c: %tarning: %m,' .
-    \ '%I%f:%l:%c: note: %m'
-    " | tee ~/.vim/compiler 
+CompilerSet makeprg=shellcheck\ -f\ gcc\ \"%:p\"
+CompilerSet errorformat=
+\ '%f:%l:%c: %trror: %m,' .
+\ '%f:%l:%c: %tarning: %m,' .
+\ '%I%f:%l:%c: note: %m'
+" | tee ~/.vim/compiler 
 
+echo "
+if filereadable(\"/etc/vim/vimrc.local\")
+source /etc/vim/vimrc.local
+endif
 
-    echo "
-    if filereadable(\"/etc/vim/vimrc.local\")
-        source /etc/vim/vimrc.local
-        endif
+if has(\"syntax\")
+syntax on
+endif
 
-        if has(\"syntax\")
-            syntax on
-            endif
-
-
-
-            set laststatus=2
-            syntax on
-            filetype indent on
-            filetype on
-            set smartindent
-            set filetype=sh
-            set ignorecase
+set laststatus=2
+syntax on
+filetype indent on
+filetype on
+set smartindent
+set filetype=sh
+set ignorecase
 
 
-            highlight Cursor guifg=white guibg=black
-            highlight iCursor guifg=white guibg=steelblue
+highlight Cursor guifg=white guibg=black
+highlight iCursor guifg=white guibg=steelblue
 
-            autocmd ColorScheme * highlight Normal ctermbg=None
-            autocmd ColorScheme * highlight NonText ctermbg=None
+autocmd ColorScheme * highlight Normal ctermbg=None
+autocmd ColorScheme * highlight NonText ctermbg=None
 
-            set guicursor=n-v-c:block-Cursor
-            set guicursor+=i:ver100-iCursor
-            set guicursor+=n-v-c:blinkon0
-            set guicursor+=i:blinkwait10
+set guicursor=n-v-c:block-Cursor
+set guicursor+=i:ver100-iCursor
+set guicursor+=n-v-c:blinkon0
+set guicursor+=i:blinkwait10
 
-            \" Source a global configuration file if available
-            if filereadable(\"/etc/vim/vimrc.local\")
-                source /etc/vim/vimrc.local
-                endif
+\" Source a global configuration file if available
+if filereadable(\"/etc/vim/vimrc.local\")
+source /etc/vim/vimrc.local
+endif
 
 
-                \" Correct file indentations for bash 
+\" Correct file indentations for bash 
 
-                filetype plugin indent on
-                \" show existing tab with 4 spaces width
-                set tabstop=4
-                \" when indenting with '>', use 4 spaces width
-                set shiftwidth=4
-                \" On pressing tab, insert 4 spaces
-                set expandtab
+filetype plugin indent on
+\" show existing tab with 4 spaces width
+set tabstop=4
+\" when indenting with '>', use 4 spaces width
+set shiftwidth=4
+\" On pressing tab, insert 4 spaces
+set expandtab
 
-                set errorformat+=%f:%l:%c\ %m
+set errorformat+=%f:%l:%c\ %m
 
-                \" Add line numbers 
-                set number
-                set nospell
+\" Add line numbers 
+set number
+set nospell
 
-                highlight AleTitleBar guibg=#RRGGBB guifg=#RRGGBB
-                command! Tnew tabnew | execute 'source /etc/vim/vimrc'
-                " | sudo tee -a /etc/vim/vimrc
-
-            } | tee -a "$logloc" 
+highlight AleTitleBar guibg=#RRGGBB guifg=#RRGGBB
+command! Tnew tabnew | execute 'source /etc/vim/vimrc'
+nnoremap n nzz
+nnoremap } }zz
+:nnoremap <expr> z<esc> 'mz' . v:count . 'o<esc>\`z'
+" | sudo tee -a /etc/vim/vimrc
+} | tee -a "$logloc" 
