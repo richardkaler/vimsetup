@@ -6,7 +6,6 @@
 # modify it under the terms of the GNU General Public License as published
 # by the Free Software Foundation; either version 3 of the License, or (at
 # your option) any later version.
-#
 # This script is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
@@ -50,12 +49,12 @@ else
 fi
 
 #Install curl with force as it was not installing properly prior
-	if ! [[ $(which curl) ]]; then
+if ! [[ $(which curl) ]]; then
 		sudo apt-get install curl -y
 		sleep 1s && wait
-	else
+else
 		echo curl is already installed
-	fi
+fi
 #Install vim plugin manager - and with force since previous installs have failed
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
