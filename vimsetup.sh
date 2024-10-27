@@ -1,4 +1,4 @@
-#!/bin/bash  
+#!/bin/bash
 
 # Copyright 2024 Richard Kaler
 #
@@ -6,6 +6,7 @@
 # modify it under the terms of the GNU General Public License as published
 # by the Free Software Foundation; either version 3 of the License, or (at
 # your option) any later version.
+#
 # This script is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
@@ -49,12 +50,12 @@ else
 fi
 
 #Install curl with force as it was not installing properly prior
-if ! [[ $(which curl) ]]; then
+	if ! [[ $(which curl) ]]; then
 		sudo apt-get install curl -y
 		sleep 1s && wait
-else
+	else
 		echo curl is already installed
-fi
+	fi
 #Install vim plugin manager - and with force since previous installs have failed
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 	https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -149,3 +150,23 @@ if exists(\"current_compiler\")
 				:nnoremap <expr> z<esc> 'mz' . v:count . 'o<esc>\`z'
 				" | sudo tee -a /etc/vim/vimrc
 			} | tee -a "$logloc"
+
+
+#Optional - work in progress. Oct 27, 2024
+#NOTE: DO NOT attempt to source as that process is automatic with shellcheck and vim
+
+#echo '
+#disable=SC2002 #www.shellcheck.net/wiki/SC2002
+#disable=SC2038 #www.shellcheck.net/wiki/SC2038
+#disable=SC2002 #www.shellcheck.net/wiki/SC2002
+#disable=SC2227 #www.shellcheck.net/wiki/SC2227
+#disable=SC2145 #www.shellcheck.net/wiki/SC2145
+#disable=SC2124 #www.shellcheck.net/wiki/SC2124
+#disable=SC2164 #www.shellcheck.net/wiki/SC2164
+#disable=SC2015 #www.shellcheck.net/wiki/SC2015
+#disable=SC2009 #www.shellcheck.net/wiki/SC2009
+#disable=SC2015 #www.shellcheck.net/wiki/SC2015
+#disable=SC2009 #www.shellcheck.net/wiki/SC2009
+#disable=SC2034 #www.shellcheck.net/wiki/SC2034
+#' > ~/.shellcheckrc
+
